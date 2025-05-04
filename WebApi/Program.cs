@@ -7,7 +7,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DBVendasApi")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DBVendasApi"),
+    b => b.MigrationsAssembly("Infrastructure"))
+);
 
 var app = builder.Build();
 
