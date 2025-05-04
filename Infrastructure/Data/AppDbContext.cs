@@ -10,6 +10,7 @@ namespace Infrastructure.Data
 
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Produto> Produto { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
