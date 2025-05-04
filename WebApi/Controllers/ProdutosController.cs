@@ -39,6 +39,26 @@ namespace WebApi.Controllers
             return Ok(produto);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> AtuaLIZAR(int id, Produto produto)
+        {
+            if (id != produto.Id) return BadRequest();
+
+            _context.Entry(produto).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Excluir(int id)
+        {
+            var produto = await _context.Produto.FindAsync(id);
+            if (produto == null) return NotFound();
+
+            _context.Produto.Remove(produto);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
 
     }
 }
