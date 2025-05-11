@@ -16,6 +16,8 @@ namespace WebApi.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Pedido>>> BuscarTodosOsPedidos()
         {
             return await _context.Pedido
@@ -48,6 +50,38 @@ namespace WebApi.Controllers
 
             return CreatedAtAction(nameof(BurcarPedidoPorId), new { id = pedido.Id }, pedido);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPedido(int id, Pedido pedido)
+        {
+            if (id != pedido.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(pedido).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Pedido.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        
+
 
 
     }
