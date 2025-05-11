@@ -80,7 +80,22 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePedido(int id)
+        {
+            var pedido = await _context.Pedido.FindAsync(id);
+            if (pedido == null)
+            {
+                return NotFound();
+            }
+
+            _context.Pedido.Remove(pedido);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
 
 
 
